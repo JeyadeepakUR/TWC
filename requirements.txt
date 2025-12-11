@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+motor
+pydantic[email]
+pyjwt
+passlib[bcrypt]
+python-dotenv
+httpx
+slowapi
+pytest
+pytest-asyncio

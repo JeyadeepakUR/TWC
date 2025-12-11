@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Env
+venv/
+env/
+.venv/
+.env
+
+# Distribution / Packaging
+build/
+dist/
+*.egg-info/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs
+*.log
+
+# IDEs
+.vscode/
+.idea/
+
+# Temporary / Generated Files
+link_*.txt
+*.spec

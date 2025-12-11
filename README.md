@@ -9,6 +9,7 @@ Backend service for managing organizations in a multi-tenant environment using F
 - **Organization CRUD**: Create, Read, Update, Delete organizations.
 - **Authentication**: JWT-based Admin login.
 - **Security**: Password hashing with Bcrypt.
+- **Rate Limiting**: API throttling to prevent abuse (default 5 req/min on critical endpoints).
 
 ## Tech Stack
 
@@ -47,6 +48,16 @@ Backend service for managing organizations in a multi-tenant environment using F
    uvicorn app.main:app --reload
    ```
 
+## API Endpoints
+
+| Method | Endpoint | Description | Auth Required |
+| :--- | :--- | :--- | :--- |
+| **POST** | `/admin/login` | Admin login to get JWT token | No |
+| **POST** | `/org/create` | Create a new organization | No |
+| **GET** | `/org/get?organization_name=...` | Get organization metadata | No |
+| **PUT** | `/org/update` | Update/Rename organization | Yes (Admin) |
+| **DELETE** | `/org/delete?organization_name=...` | Delete organization and data | Yes (Admin) |
+
 ## API Documentation
 
 Once running, visit:
@@ -55,24 +66,37 @@ Once running, visit:
 
 ## Testing
 
-A test script `test_flow.py` is included to verify the core workflow.
+## Testing
+
+This project uses **Pytest** for a professional and robust test suite.
+The tests verify the complete lifecycle: Create -> Login -> Get -> Update -> Delete.
+
 Ensure MongoDB is running, then drive:
 
 ```bash
-python test_flow.py
+# Run all tests
+python -m pytest -v
 ```
 
 ## Project Structure
 
 ```
 ├── app/
-│   ├── api/            # Route handlers
-│   ├── core/           # Config and Security
+│   ├── api/            # Route handlers (admin, org)
+│   ├── core/           # Config, Security, Rate Limiter
 │   ├── db/             # Database connection
 │   ├── models/         # Pydantic models
 │   └── main.py         # Entry point
+├── tests/              # Pytest suite
+│   ├── conftest.py     # Test fixtures
+│   └── test_api.py     # E2E test cases
 ├── architecture.md     # High-level diagram and design notes
 ├── requirements.txt    # Dependencies
-├── test_flow.py        # Automated verification script
+├── pytest.ini          # Pytest configuration
 └── .env                # Environment variables
 ```
+
+## License
+
+This project is provided for evaluation purposes for The Wedding Company internship assignment.
+
